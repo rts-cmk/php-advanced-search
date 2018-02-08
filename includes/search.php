@@ -1,4 +1,4 @@
-<h1>Søgeresultater</h1>
+<h1>Avanceret søgning</h1>
 <form action="" method="get">
   <input type="hidden" name="page" value="search">
   <label for="category">Kategori:</label>
