@@ -32,5 +32,27 @@
   <button type="submit">Søg</button>
 </form>
 <?php
+  $sql = 'SELECT products.productId, products.productTitle,
+products.productDesc, products.productPrice,
+category.categoryName, productbrand.brandName
+FROM products
+INNER JOIN category
+	ON category.categoryId = products.fkCategory
+INNER JOIN productbrand
+	ON productbrand.brandId = products.productbrand';
 
+if (isset($_GET['fritekst']) && !empty($_GET['fritekst'])) {
+  $sql .= " WHERE products.productDesc LIKE CONCAT('%', :fritekst, '%')
+OR products.productTitle LIKE CONCAT('%', :fritekst, '%')
+OR category.categoryName LIKE CONCAT('%', :fritekst, '%')
+OR productbrand.brandName LIKE CONCAT('%', :fritekst, '%')";
+}
+
+$stmt = $conn->prepare($sql);
+$stmt->execute([':fritekst' => $_GET['fritekst']]);
+
+foreach($stmt->fetchAll() as $row) {
+  print_r($row);
+  echo '<hr>';
+}
 ?>
