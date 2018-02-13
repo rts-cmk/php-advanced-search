@@ -65,14 +65,44 @@ if (isset($_GET['category']) && is_numeric($_GET['category'])) {
   $paramArray[':categoryId'] = $_GET['category'];
 }
 
-/* echo $sql;
-exit(); */
+if (isset($_GET['brand']) && is_numeric($_GET['brand'])) {
+  if (empty($_GET['fritekst']) && empty($_GET['category'])) {
+    $sql .= " OR";
+  } else {
+    $sql .= " AND";
+  }
+
+  $sql .= " products.productBrand = :brandId";
+
+  $paramArray[':brandId'] = $_GET['brand'];
+}
+
+if (isset($_GET['maxprice']) && is_numeric($_GET['maxprice'])) {
+  if (empty($_GET['fritekst'])
+  && empty($_GET['category'])
+  && empty($_GET['brand'])) {
+    $sql .= " OR";
+  } else {
+    $sql .= " AND";
+  }
+
+  $sql .= " products.productPrice <= :price";
+
+  $paramArray[':price'] = $_GET['maxprice'];
+}
 
 $stmt = $conn->prepare($sql);
 $stmt->execute($paramArray);
 
-foreach($stmt->fetchAll() as $row) {
-  print_r($row);
-  echo '<hr>';
-}
+$formatResults = function($result) {
+  ?>
+  <div>
+  <h2><?=$result['brandName']?> <?=$result['productTitle']?></h2>
+  <p><?=strlen($result['productDesc']) > 185 ? substr($result['productDesc'], 0, 180).' ...' : $result['productDesc'] ?></p>
+  <p>DKK <?=number_format($result['productPrice'], 2, ',', '.')?></p>
+  </div>
+  <?php
+};
+
+array_walk($stmt->fetchAll(), $formatResults);
 ?>
