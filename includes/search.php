@@ -104,5 +104,10 @@ $formatResults = function($result) {
   <?php
 };
 
-array_walk($stmt->fetchAll(), $formatResults);
+$results = $stmt->fetchAll();
+
+if (count($results) > 0)
+  array_walk($results, $formatResults);
+else
+  echo "<p>Næhæhæ, der var ikke en skid i databasen!</p>";
 ?>
