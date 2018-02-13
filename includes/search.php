@@ -39,17 +39,37 @@ FROM products
 INNER JOIN category
 	ON category.categoryId = products.fkCategory
 INNER JOIN productbrand
-	ON productbrand.brandId = products.productbrand';
+  ON productbrand.brandId = products.productbrand
+WHERE false';
+
+$paramArray = [];
 
 if (isset($_GET['fritekst']) && !empty($_GET['fritekst'])) {
-  $sql .= " WHERE products.productDesc LIKE CONCAT('%', :fritekst, '%')
+  $sql .= " OR (products.productDesc LIKE CONCAT('%', :fritekst, '%')
 OR products.productTitle LIKE CONCAT('%', :fritekst, '%')
 OR category.categoryName LIKE CONCAT('%', :fritekst, '%')
-OR productbrand.brandName LIKE CONCAT('%', :fritekst, '%')";
+OR productbrand.brandName LIKE CONCAT('%', :fritekst, '%'))";
+
+$paramArray[':fritekst'] = $_GET['fritekst'];
 }
 
+if (isset($_GET['category']) && is_numeric($_GET['category'])) {
+  if (empty($_GET['fritekst'])) {
+    $sql .= " OR";
+  } else {
+    $sql .= " AND";
+  }
+
+  $sql .= " products.fkCategory = :categoryId";
+
+  $paramArray[':categoryId'] = $_GET['category'];
+}
+
+/* echo $sql;
+exit(); */
+
 $stmt = $conn->prepare($sql);
-$stmt->execute([':fritekst' => $_GET['fritekst']]);
+$stmt->execute($paramArray);
 
 foreach($stmt->fetchAll() as $row) {
   print_r($row);
