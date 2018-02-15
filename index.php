@@ -37,6 +37,9 @@ if (!isset($_GET['page']) || empty($_GET['page'])) {
       case 'search':
         include_once './includes/search.php';
         break;
+      case 'paging':
+        include_once './includes/paging.php';
+        break;
       default:
         include_once './includes/404.php';
         break;
