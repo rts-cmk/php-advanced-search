@@ -1,5 +1,6 @@
 <?php
 function hasRole($user_id, $role) {
+	global $conn;
 	$sql = "SELECT permissions.perm_desc
 	FROM user_role
 	JOIN roles
@@ -10,23 +11,15 @@ function hasRole($user_id, $role) {
 		ON role_perm.perm_id = permissions.perm_id
 	WHERE user_role.user_id = :userId";
 
-try {
-		$stmt = $conn->prepare($sql);
-		$stmt->bindParam(':userId', $user_id, PDO::PARAM_INT);
-		$stmt->execute();
-	}	catch (PDOException $e) {
-		echo $e->getMessage();
+	$stmt = $conn->prepare($sql);
+	$stmt->bindParam(':userId', $user_id, PDO::PARAM_INT);
+	$stmt->execute();
+
+	foreach($stmt->fetchAll() as $row) {
+		if (in_array($role, $row)) {
+			return true;
+		}
 	}
-	
-	//$stmt->execute();
-
-	// $result = $stmt->fetchAll();
-
-	/* if (in_array($role, $result)) {
-		return true;
-	} else {
-		return false;
-	} */
-	// return false;
+	return false;
 }
 ?>
