@@ -1,5 +1,4 @@
 <?php
-require_once '../db.php';
 
 if ($_POST) {
 	$sql = "SELECT user_id, passphrase
@@ -13,7 +12,7 @@ if ($_POST) {
 			session_start();
 			$_SESSION['isLoggedIn'] = true;
 			$_SESSION['userId'] = $result['user_id'];
-			header('Location: index.php');
+			header('Location: ?page=forside');
 		} else {
 			echo "Forkert adgangskode";
 		}

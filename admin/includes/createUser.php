@@ -1,6 +1,4 @@
 <?php
-require_once '../db.php';
-
 if ($_POST) {
 	$sql = "INSERT INTO users
 					SET username = :username,
