@@ -1,6 +1,5 @@
 <?php
-function hasRole($user_id, $role) {
-	global $conn;
+$hasPermission = function ($user_id, $role) use ($conn) {
 	$sql = "SELECT permissions.perm_desc
 	FROM user_role
 	JOIN roles
@@ -21,5 +20,5 @@ function hasRole($user_id, $role) {
 		}
 	}
 	return false;
-}
+};
 ?>

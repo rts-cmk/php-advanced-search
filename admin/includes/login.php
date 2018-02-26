@@ -1,5 +1,10 @@
 <?php
 
+if (isset($_GET['logout'])) {
+	session_destroy();
+	header('Location: ?page=login');
+}
+
 if ($_POST) {
 	$sql = "SELECT user_id, passphrase
 					FROM users WHERE username = :username";
@@ -12,7 +17,7 @@ if ($_POST) {
 			session_start();
 			$_SESSION['isLoggedIn'] = true;
 			$_SESSION['userId'] = $result['user_id'];
-			header('Location: ?page=forside');
+			header('Location: ?page=dashboard');
 		} else {
 			echo "Forkert adgangskode";
 		}
@@ -21,9 +26,9 @@ if ($_POST) {
 	}
 }
 ?>
-<h1>Log ind</h1>
+<h1>Log in</h1>
 <form action="" method="post">
-<input type="text" name="username" placeholder="Brugernavn">
-<input type="password" name="passphrase" placeholder="Adgangskode">
-<button type="submit">Log ind</button>
+<input type="text" name="username" placeholder="Username">
+<input type="password" name="passphrase" placeholder="Passphrase">
+<button type="submit">Log in</button>
 </form>
