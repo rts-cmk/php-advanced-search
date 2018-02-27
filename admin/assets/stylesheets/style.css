@@ -1,0 +1,243 @@
+:root {
+	--font-stack: "Helvetica", arial, verdana, sans-serif;
+	--font-size: calc(14px + (21 - 14) * (100vw - 412px) / (1920 - 412));
+	--line-height: 120%;
+	--primary-color: hsl(200, 100%, 17%);
+	--off-dark: hsl(0, 0%, 20%);
+	--off-light: hsl(0, 0%, 95%);	
+	--danger: hsl(0, 50%, 50%);
+	--warning: hsl(54, 50%, 50%);
+	--affirmative: hsl(130, 50%, 50%);
+	--shadow: hsla(0, 0%, 0%, 40%);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font: normal 300 var(--font-size)/var(--line-height) var(--font-stack);
+	color: var(--off-dark);
+}
+
+.actionbar {
+	grid-area: actionbar;
+	line-height: 7vh;
+	padding: 0 1em;
+	background-color: var(--primary-color);
+	color: var(--off-light);
+}
+
+label[for="hamburgerIcon"] {
+	position: absolute;
+	top: 0.5em;
+	right: 1em;
+	color: var(--off-light);
+}
+
+#hamburgerIcon {
+	display: none;
+}
+
+#hamburgerIcon:checked + nav.primaryNavigation {
+	display: block;
+}
+
+nav.primaryNavigation {
+	display: none;
+	position: absolute;
+	top: 7vh;
+	width: 100%;
+	grid-area: primaryNavigation;
+	background-color: var(--primary-color);
+	color: var(--off-light);
+	padding: 1em 0;
+	border-right: 1px solid var(--off-dark);
+}
+
+nav.primaryNavigation ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav.primaryNavigation a {
+	display: block;
+	color: var(--off-light);
+	text-decoration: none;
+	padding: 0.3em 1em;
+}
+
+nav.primaryNavigation a:hover {
+	background-color: var(--off-light);
+	color: var(--off-dark);
+}
+
+nav.primaryNavigation a.active {
+	font-weight: 700;
+	background-color: var(--off-light);
+	color: var(--off-dark);
+}
+
+main.content {
+	padding: 1em;
+	min-height: 90vh;
+}
+
+footer {
+	grid-area: footer;
+	background-color: var(--off-light);
+	color: var(--off-dark);
+	line-height: 3vh;
+	text-align: center;
+	font-size: 70%;
+}
+
+input[type='text'],
+input[type='number'],
+input[type='email'],
+input[type='search'],
+input[type='password'],
+button {
+	font-size: inherit;
+	width: 100%;
+}
+
+input {
+	border: none;
+	border-bottom: 1px solid var(--off-dark);
+	background: transparent;
+	margin-bottom: 1px;
+}
+
+input:focus {
+	border-bottom-width: 2px;
+	margin-bottom: 0;
+}
+
+form.loginForm {
+	grid-area: second;
+}
+
+form div label {
+	display: block;
+	font-size: calc(var(--font-size) * 0.8);
+}
+
+.button {
+	display: block;
+	padding: 0.3em 1em;
+	border: 1px solid var(--off-dark);
+	border-radius: 4px;
+	box-shadow: 1px 1px 6px var(--shadow);
+	cursor: pointer;
+}
+
+a.button {
+	display: inline-block;
+	text-decoration: none;
+}
+
+.button.button--primary {
+	background: linear-gradient(hsl(200, 100%, 30%), var(--primary-color));
+	color: var(--off-light);
+}
+.button.button--warning {
+	background: linear-gradient(hsl(54, 50%, 70%), var(--warning));
+	color: var(--off-dark);
+}
+.button.button--danger {
+	background: linear-gradient(hsl(0, 50%, 60%), var(--danger));
+	color: var(--off-light);
+}
+.button.button--affirmative {
+	background: linear-gradient(hsl(130, 50%, 70%), var(--affirmative));
+	color: var(--off-light);
+}
+
+span.errorMessage {
+	font-size: calc(var(--font-size) * 0.8);
+	color: var(--danger);
+	display: block;
+}
+
+main table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+main table thead tr {
+	border-bottom: 1px solid var(--off-dark);
+}
+
+main table.striped tbody tr:nth-of-type(odd) {
+	background-color: var(--off-light);
+}
+
+main table th,
+main table td {
+	padding: 0.3em 1em;
+}
+
+@media screen and (min-width: 60em) {
+	body {
+		display: grid;
+		grid-template-columns: 12em 1fr;
+		grid-template-rows: 7vh auto 3vh;
+		grid-template-areas:
+			"actionbar actionbar"
+			"primaryNavigation content"
+			"primaryNavigation footer";
+	}
+
+	main.content {
+		grid-area: content;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: auto;
+		grid-template-areas: "first second third";
+		grid-column-gap: 1em;
+	}
+
+	label[for="hamburgerIcon"] {
+		display: none;
+	}
+	nav.primaryNavigation {
+		position: relative;
+		top: 0;
+		grid-area: primaryNavigation;
+		display: block;
+	}
+
+	main div.fullWidth {
+		grid-column-start: first;
+		grid-column-end: third;
+	}
+	
+	main div.firstTwo {
+		grid-column-start: first;
+		grid-column-end: second;
+	}
+	
+	main div.lastTwo {
+		grid-column-start: second;
+		grid-column-end: third;
+	}
+	
+	main div.first {
+		grid-area: first;
+	}
+	
+	main div.second {
+		grid-area: second;
+	}
+	
+	main div.third {
+		grid-area: third;
+	}
+}

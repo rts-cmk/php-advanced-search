@@ -1,9 +1,10 @@
 <?php
-
 if (isset($_GET['logout'])) {
 	session_destroy();
 	header('Location: ?page=login');
 }
+
+$errorMessages = [];
 
 if ($_POST) {
 	$sql = "SELECT user_id, passphrase
@@ -19,16 +20,24 @@ if ($_POST) {
 			$_SESSION['userId'] = $result['user_id'];
 			header('Location: ?page=dashboard');
 		} else {
-			echo "Forkert adgangskode";
+			$errorMessages['password'] = "Incorrect passphrase";
 		}
 	} else {
-		echo "Denne bruger eksisterer ikke";
+		$errorMessages['username'] = "This user does not exist";
 	}
 }
 ?>
-<h1>Log in</h1>
-<form action="" method="post">
-<input type="text" name="username" placeholder="Username">
-<input type="password" name="passphrase" placeholder="Passphrase">
-<button type="submit">Log in</button>
+<form action="" method="post" class="loginForm">
+	<h1>Log in</h1>
+	<div>
+		<label for="loginForm__username">Username</label>
+		<input type="text" name="username" id="loginForm__username" value="<?=@$_POST['username']?>">
+		<span class="errorMessage"><?=$errorMessages['username']?>&nbsp;</span>
+	</div>
+	<div>
+		<label for="loginForm__password">Passphrase</label>
+		<input type="password" name="passphrase" id="loginForm__password">
+		<span class="errorMessage"><?=$errorMessages['password']?>&nbsp;</span>
+	</div>
+	<button type="submit" class="button button--primary">Log in</button>
 </form>

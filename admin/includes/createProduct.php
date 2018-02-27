@@ -8,4 +8,12 @@ if (!$hasPermission($_SESSION['userId'], 'create product')) {
 	die();
 }
 ?>
-<h1>Create Product</h1>
+<div class="firstTwo">
+	<h1>Create Product</h1>
+	<form action="" method="post">
+		whatevah!
+	</form>
+</div>
+<div class="third">
+	<h2>sploink</h2>
+</div>

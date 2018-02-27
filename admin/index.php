@@ -16,14 +16,26 @@ if (!isset($_GET['page']) || empty($_GET['page'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Administration</title>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	<link rel="stylesheet" href="assets/stylesheets/style.css">
 </head>
 <body>
-	<nav>
-		<a href="?page=dashboard">Dashboard</a>
-		<?=$hasPermission($_SESSION['userId'], 'update frontpage')?'<a href="?page=editFrontpage">Edit Frontpage</a>':''?>
-		<?=$hasPermission($_SESSION['userId'], 'create product')?'<a href="?page=createProduct">Create Product</a>':''?>
-		<?=$_SESSION['isLoggedIn']?'<a href="?page=login&logout">Log out</a>':''?>
+	<div class="actionbar">
+		Awesome PHP Admin Panel
+	</div>
+	<label for="hamburgerIcon"><i class="fa fa-bars"></i></label>
+	<input type="checkbox" id="hamburgerIcon">
+	<nav class="primaryNavigation">
+		<ul>
+			<?php if ($_SESSION['isLoggedIn']) { ?>
+			<li><a href="?page=dashboard">Dashboard</a></li>
+			<?=$hasPermission($_SESSION['userId'], 'update frontpage')?'<li><a href="?page=editFrontpage">Edit Frontpage</a></li>':''?>
+			<li><a href="?page=products">Products</a></li>
+			<?=$_SESSION['isLoggedIn']?'<li><a href="?page=login&logout">Log out</a></li>':''?>
+			<?php } ?>
+		</ul>
 	</nav>
+	<main class="content">
 	<?php
 		// Router: Inkludér sider afhængig af hvad der står i URL'en
 		$file = './includes/' . $_GET['page'] . '.php';
@@ -33,5 +45,8 @@ if (!isset($_GET['page']) || empty($_GET['page'])) {
 			include_once './includes/login.php';
 		}
   ?>
+	</main>
+	<footer>Copyright &copy; <?=date('Y')?></footer>
+	<script src="assets/javascripts/app.js"></script>
 </body>
 </html>
