@@ -23,8 +23,8 @@ if (!isset($_GET['page']) || empty($_GET['page'])) {
 	<div class="actionbar">
 		Awesome PHP Admin Panel
 	</div>
-	<label for="hamburgerIcon"><i class="fa fa-bars"></i></label>
-	<input type="checkbox" id="hamburgerIcon">
+	<?=$_SESSION['isLoggedIn']?'<label for="hamburgerIcon">Menu <i class="fa fa-bars"></i></label>':''?>
+	<input type="checkbox" id="hamburgerIcon" aria-hidden="true">
 	<nav class="primaryNavigation">
 		<ul>
 			<?php if ($_SESSION['isLoggedIn']) { ?>

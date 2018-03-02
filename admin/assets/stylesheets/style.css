@@ -38,6 +38,7 @@ label[for="hamburgerIcon"] {
 	top: 0.5em;
 	right: 1em;
 	color: var(--off-light);
+	line-height: 5vh;
 }
 
 #hamburgerIcon {
@@ -53,6 +54,7 @@ nav.primaryNavigation {
 	position: absolute;
 	top: 7vh;
 	width: 100%;
+	height: 93vh;
 	grid-area: primaryNavigation;
 	background-color: var(--primary-color);
 	color: var(--off-light);
